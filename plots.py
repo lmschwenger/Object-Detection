@@ -38,5 +38,4 @@ def plotLineDetector(image, edges, line_image):
     ax[2].set_title('Identified Lines')
     for axis in ax.reshape(-1):
         axis.axis('off')
-    plt.imshow(line_image)
-    plt.show()
+    return fig

@@ -40,4 +40,8 @@ for line in lines:
         cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),5)
 from plots import plotLineDetector
 if input("Show image processing steps? (y/n)") == "y":
-    plotLineDetector(image, edges, line_image)
+    fig = plotLineDetector(image, edges, line_image)
+    fig.show()
+if input("Save figure? (y/n) ") == "y":
+    fig = plotLineDetector(image, edges, line_image)
+    fig.savefig('Plots/LineDetection.png', dpi=200, bbox_inches='tight')
