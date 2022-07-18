@@ -9,6 +9,7 @@ import os
 current_folder = os.path.dirname(os.path.realpath(__file__))
 os.chdir(current_folder)
 
+import tensorflow as tf
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.applications.resnet import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -22,32 +23,32 @@ import imutils
 import time
 import cv2
 
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True,
-	help="path to the input image")
-ap.add_argument("-s", "--size", type=str, default="(200, 150)",
-	help="ROI size (in pixels)")
-ap.add_argument("-c", "--min-conf", type=float, default=0.9,
-	help="minimum probability to filter weak detections")
-ap.add_argument("-v", "--visualize", type=int, default=-1,
-	help="whether or not to show extra visualizations for debugging")
-args = vars(ap.parse_args())
+
 #%%
 # initialize variables used for the object detection procedure
 WIDTH = 600
 PYR_SCALE = 1.5
 WIN_STEP = 16
-ROI_SIZE = eval(args["size"])
-INPUT_SIZE = (224, 224)
+ROI_SIZE = (25, 25)
+INPUT_SIZE = (180, 180)
 
 # load our the network weights from disk
 print("[INFO] loading network...")
 model = ResNet50(weights="imagenet", include_top=True)
 
+#%% Loading model
+
+model = tf.keras.models.load_model('D:\savedModels\OD_model_TF')
+
+
+image_path = r'D:\GitHub\Object Detection\images\test_circuit3.png'
+min_conf = 0.9
+visualize=0
+
+
 # load the input image from disk, resize it such that it has the
 # has the supplied width, and then grab its dimensions
-orig = cv2.imread(args["image"])
+orig = cv2.imread(image_path)
 orig = imutils.resize(orig, width=WIDTH)
 (H, W) = orig.shape[:2]
 
@@ -92,7 +93,7 @@ for image in pyramid:
 
 		# check to see if we are visualizing each of the sliding
 		# windows in the image pyramid
-		if args["visualize"] > 0:
+		if visualize > 0:
 			# clone the original image and then draw a bounding box
 			# surrounding the current region
 			clone = orig.copy()
@@ -117,24 +118,39 @@ rois = np.array(rois, dtype="float32")
 # long the classifications took
 print("[INFO] classifying ROIs...")
 start = time.time()
-preds = model.predict(rois)
+preds = model.predict(rois, verbose=1)
+print(preds)
 end = time.time()
 print("[INFO] classifying ROIs took {:.5f} seconds".format(
 	end - start))
 
 # decode the predictions and initialize a dictionary which maps class
 # labels (keys) to any ROIs associated with that label (values)
-preds = imagenet_utils.decode_predictions(preds, top=1)
-labels = {}
 
+data_dir = 'D:\GitHub\Image Recognition\Test Images'
+
+train_ds = tf.keras.utils.image_dataset_from_directory(data_dir,
+  validation_split=0.2,
+  subset="training",
+  seed=123,
+  image_size=(180, 180),
+  batch_size=390)
+
+#Load method for prediction decoding
+from pyimagesearch.detection_helpers import decode_predictions
+
+
+data_labels = train_ds.class_names
+preds = decode_predictions(preds, data_labels)
+labels = {}
 # loop over the predictions
 for (i, p) in enumerate(preds):
 	# grab the prediction information for the current ROI
-	(imagenetID, label, prob) = p[0]
-
+	(label, prob) = p
+	print(prob)
 	# filter out weak detections by ensuring the predicted probability
 	# is greater than the minimum probability
-	if prob >= args["min_conf"]:
+	if prob >= min_conf:
 		# grab the bounding box associated with the prediction and
 		# convert the coordinates
 		box = locs[i]

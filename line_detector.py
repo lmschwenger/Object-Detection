@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 # Read in the image
-image = cv2.imread('D:/GitHub/Image Recognition/Test Images/Resistor/Resistor_8.jpg')
+image = cv2.imread(r'D:\GitHub\Object Detection\images\test_circuit2.png')
 # Change color to RGB (from BGR)
 #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -19,7 +19,7 @@ image = cv2.imread('D:/GitHub/Image Recognition/Test Images/Resistor/Resistor_8.
 #gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 # Define our parameters for Canny
 low_threshold = 50
-high_threshold = 100
+high_threshold = 55
 edges = cv2.Canny(image, low_threshold, high_threshold)
 
 
@@ -27,8 +27,8 @@ edges = cv2.Canny(image, low_threshold, high_threshold)
 # Make a blank the same size as our image to draw on
 rho = 1
 theta = np.pi/180
-threshold = 10
-min_line_length = 50
+threshold = 55
+min_line_length = 5
 max_line_gap = 20
 line_image = np.copy(image) #creating an image copy to draw lines on
 # Run Hough on the edge-detected image

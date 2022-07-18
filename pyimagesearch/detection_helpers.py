@@ -25,3 +25,12 @@ def image_pyramid(image, scale=1.5, minSize=(50, 50)):
 
 		# yield the next image in the pyramid
 		yield image
+
+
+def decode_predictions(preds, labels):
+	decoded = []
+	for row in preds:
+		idx = list(row).index(max(row))
+		decoded.append([labels[idx], row[idx]])
+
+	return decoded
