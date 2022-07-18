@@ -20,9 +20,9 @@ draw_result = ImageDraw.Draw(output_image)
 
 # Find circles
 rmin = 18
-rmax = 25
+rmax = 45
 steps = 100
-threshold = 0.4
+threshold = 0.5
 
 points = []
 for r in range(rmin, rmax + 1):
@@ -49,6 +49,11 @@ for x, y, r in circles:
 
 fig, ax = plt.subplots(1, dpi=200)
 ax.imshow(output_image)
-plt.show()
+ax.axis('off')
+if input("Show result? (y/n) ") == "y":
+    plt.show()
+
+if input("Save figure? (y/n) ") == "y":
+    fig.savefig('Plots/Circle Detection.png', dpi=200, bbox_inches='tight')
 # Save output image
 #output_image.save("result.png")
