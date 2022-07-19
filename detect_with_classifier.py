@@ -30,28 +30,24 @@ WIDTH = 600
 PYR_SCALE = 1.5
 WIN_STEP = 16
 ROI_SIZE = (25, 25)
-INPUT_SIZE = (180, 180)
+INPUT_SIZE = (250, 250)
 
 # load our the network weights from disk
 print("[INFO] loading network...")
-model = ResNet50(weights="imagenet", include_top=True)
-
-#%% Loading model
-
 model = tf.keras.models.load_model('D:\savedModels\OD_model_TF')
 
 
-image_path = r'D:\GitHub\Object Detection\images\test_circuit3.png'
-min_conf = 0.9
+image_path = r'D:\GitHub\Object Detection\images\test_circuit5.jpg'
+min_conf = .20
 visualize=0
 
 
 # load the input image from disk, resize it such that it has the
 # has the supplied width, and then grab its dimensions
 orig = cv2.imread(image_path)
+(H_o,W_o) = orig.shape[:2]
 orig = imutils.resize(orig, width=WIDTH)
 (H, W) = orig.shape[:2]
-
 # initialize the image pyramid
 pyramid = image_pyramid(orig, scale=PYR_SCALE, minSize=ROI_SIZE)
 
@@ -64,7 +60,7 @@ locs = []
 # time how long it takes to loop over the image pyramid layers and
 # sliding window locations
 start = time.time()
-
+i = 1
 # loop over the image pyramid
 for image in pyramid:
 	# determine the scale factor between the *original* image
@@ -85,7 +81,7 @@ for image in pyramid:
 		# the region using Keras/TensorFlow
 		roi = cv2.resize(roiOrig, INPUT_SIZE)
 		roi = img_to_array(roi)
-		roi = preprocess_input(roi)
+		#roi = preprocess_input(roi)
 
 		# update our list of ROIs and associated coordinates
 		rois.append(roi)
@@ -104,7 +100,10 @@ for image in pyramid:
 			cv2.imshow("Visualization", clone)
 			cv2.imshow("ROI", roiOrig)
 			cv2.waitKey(0)
-
+			#if i > 307:
+			#	cv2.imwrite(r'D:\GitHub\Image Recognition\Test Images\wire\wire_%s.png' % i, roiOrig)
+			
+			#i+=1
 # show how long it took to loop over the image pyramid layers and
 # sliding window locations
 end = time.time()
@@ -113,12 +112,12 @@ print("[INFO] looping over pyramid/windows took {:.5f} seconds".format(
 
 # convert the ROIs to a NumPy array
 rois = np.array(rois, dtype="float32")
-
 # classify each of the proposal ROIs using ResNet and then show how
 # long the classifications took
 print("[INFO] classifying ROIs...")
 start = time.time()
 preds = model.predict(rois, verbose=1)
+
 print(preds)
 end = time.time()
 print("[INFO] classifying ROIs took {:.5f} seconds".format(
@@ -141,25 +140,30 @@ from pyimagesearch.detection_helpers import decode_predictions
 
 
 data_labels = train_ds.class_names
-preds = decode_predictions(preds, data_labels)
+
 labels = {}
+filler_features = ['Other', 'wire', 'paper']
 # loop over the predictions
 for (i, p) in enumerate(preds):
 	# grab the prediction information for the current ROI
-	(label, prob) = p
-	print(prob)
+	p = tf.nn.softmax(p)
+	p_max = np.max(p)
+	label = data_labels[np.argmax(p)]
+	print(label, p)
 	# filter out weak detections by ensuring the predicted probability
 	# is greater than the minimum probability
-	if prob >= min_conf:
+	if p_max >= min_conf and label not in filler_features:
 		# grab the bounding box associated with the prediction and
 		# convert the coordinates
 		box = locs[i]
+		#print(prob)
 
 		# grab the list of predictions for the label and add the
 		# bounding box and probability to the list
 		L = labels.get(label, [])
-		L.append((box, prob))
+		L.append((box, p_max))
 		labels[label] = L
+		print(labels)
 
 # loop over the labels for each of detected objects in the image
 for label in labels.keys():
@@ -168,7 +172,7 @@ for label in labels.keys():
 	clone = orig.copy()
 
 	# loop over all bounding boxes for the current label
-	for (box, prob) in labels[label]:
+	for (box, p_max) in labels[label]:
 		# draw the bounding box on the image
 		(startX, startY, endX, endY) = box
 		cv2.rectangle(clone, (startX, startY), (endX, endY),
@@ -177,7 +181,7 @@ for label in labels.keys():
 	# show the results *before* applying non-maxima suppression, then
 	# clone the image again so we can display the results *after*
 	# applying non-maxima suppression
-	cv2.imshow("Before", clone)
+	#cv2.imshow("Before", clone)
 	clone = orig.copy()
 
 	# extract the bounding boxes and associated prediction
@@ -193,7 +197,7 @@ for label in labels.keys():
 		cv2.rectangle(clone, (startX, startY), (endX, endY),
 			(0, 255, 0), 2)
 		y = startY - 10 if startY - 10 > 10 else startY + 10
-		cv2.putText(clone, label, (startX, y),
+		cv2.putText(clone, label+" "+str(round(p_max, 2)), (startX, y),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
 
 	# show the output after apply non-maxima suppression
