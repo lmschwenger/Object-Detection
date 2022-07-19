@@ -90,5 +90,6 @@ history = model.fit(train_ds, epochs=EPOCHS, validation_data=test_ds)
 import plots
 if input("See Results of training? (y/n): ") == "y":
     plots.training_results(history, EPOCHS)
+
 # Save the weights using the `checkpoint_path` format
 model.save('D:/savedModels/OD_model_TF')
