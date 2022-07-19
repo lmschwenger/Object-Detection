@@ -11,7 +11,7 @@ from canny import canny_edge_detector
 from collections import defaultdict
 import matplotlib.pyplot as plt
 # Load image:
-input_image = Image.open('D:/GitHub/Image Recognition/Test Images/ammeter/ammeter_4.jpg')
+input_image = Image.open('D:/GitHub/Object Detection/trainingImages/ammeter/ammeter_4.jpg')
 input_image = Image.open('D:/GitHub/Object Detection/images/test_circuit2.png')
 # Output image:
 output_image = Image.new("RGB", input_image.size)

@@ -10,7 +10,7 @@ img_height = 180
 img_width = 180
 
 
-data_dir = 'D:\GitHub\Image Recognition\Test Images'
+data_dir = 'D:\GitHub\Object Detection\trainingImages'
 test_ds = tf.keras.utils.image_dataset_from_directory(
   data_dir,
   validation_split=0.2,
@@ -24,7 +24,7 @@ model = tf.keras.models.load_model('D:\savedModels\OD_model_TF')
 model.evaluate(test_ds, verbose=2)
 
 
-image_path = r'D:\GitHub\Image Recognition\Test Images\voltmeter\voltmeter_15.jpg'
+image_path = r'D:\GitHub\Object Detection\trainingImages\voltmeter\voltmeter_15.jpg'
 orig = cv2.imread(image_path)
 orig = cv2.resize(orig, dsize=(img_height, img_width))
 test_img = np.reshape(orig, (1, img_height, img_width, 3))
