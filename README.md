@@ -26,4 +26,4 @@ Line detection is carried out using Hough transform from opencv-library.
 
 ## Circle detection
 Using circle_detector.py circle can be identified.
-![alt text](https://github.com/lmschwenger/Object-Detection/Plots/Circle%20Detection.png?raw=true)
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/Plots/Circle%20Detection.png?raw=true)
