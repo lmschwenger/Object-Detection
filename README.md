@@ -7,7 +7,7 @@ The neural network uses data from the Image-Recognition project.
 Model training is carried out via the CNN_TensorFlow.py file. NOTICE the model is saved at the end of training. Make sure to adjust the path to fit your own system.
 
 ### Latest training results
-![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/Plots/Latest%performance.png?raw=true)
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/Plots/Latest%20performance.png?raw=true)
 ## Testing the Nerual Network
 
 After training and saving the trained model it can be tested one (1) An image, or (2) on a complete circuit.
