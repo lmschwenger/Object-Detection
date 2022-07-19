@@ -6,6 +6,10 @@ An object detection algorithm for detection of elements in electrical circuits (
 The neural network uses data from the Image-Recognition project.
 Model training is carried out via the CNN_TensorFlow.py file. NOTICE the model is saved at the end of training. Make sure to adjust the path to fit your own system.
 
+### Latest training results
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/Plots/Latest%performance.png?raw=true)
+## Testing the Nerual Network
+
 After training and saving the trained model it can be tested one (1) An image, or (2) on a complete circuit.
 Both test (1) and (2) load the previously saved model. Again, the path to the saved model must be adjusted to your case.
 
@@ -22,7 +26,7 @@ The sliding window technique is simply creating sub-images, where a sliding wind
 Using line_detector.py straight lines can be detected.
 Line detection is carried out using Hough transform from opencv-library.
 
-![alt text](https://github.com/lmschwenger/Object-Detection/blob/ec07775ef38e380a9cad02ff7593b7bcdf11d208/Plots/Line%20Detection.png?raw=true)
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/Plots/Line%20Detection.png?raw=true)
 
 ## Circle detection
 Using circle_detector.py circle can be identified.
