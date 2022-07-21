@@ -5,10 +5,13 @@ An object detection algorithm for detection of elements in electrical circuits (
 
 ### Random noise
 
-Solarized dark             |  Solarized Ocean
+Original             |  Noise filter
 :-------------------------:|:-------------------------:
-![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_snp.jpg?raw=true)
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_snp.JPG?raw=true)
 
+Original                   |  Brightened               |   Darkened               |
+:-------------------------:|:-------------------------:|:-------------------------:
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_dark.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_bright.JPG?raw=true)
 
 
 ## Training the neural network
