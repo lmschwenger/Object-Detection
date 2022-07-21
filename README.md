@@ -1,6 +1,15 @@
 # Object Detection
 
 An object detection algorithm for detection of elements in electrical circuits (See examples below)
+## Data augmentation
+
+### Random noise
+
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter_1.jpg?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter_1_snp.jpg?raw=true)
+
+
 
 ## Training the neural network
 The neural network uses data from the Image-Recognition project.
