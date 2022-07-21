@@ -9,9 +9,11 @@ Original             |  Noise filter
 :-------------------------:|:-------------------------:
 ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_snp.JPG?raw=true)
 
+### Brightness adjustment
+
 Original                   |  Brightened               |   Darkened               |
 :-------------------------:|:-------------------------:|:-------------------------:
-![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_dark.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_bright.JPG?raw=true)
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_bright.JPG?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_dark.JPG?raw=true)
 
 
 ## Training the neural network
