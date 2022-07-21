@@ -18,7 +18,7 @@ from pyimagesearch.detection_helpers import process
 batch_size = 350
 img_height = 250
 img_width = 250
-data_dir = 'D:\GitHub\Object Detection\trainingImages'
+data_dir = r'D:\GitHub\Object Detection\trainingImages'
 
 train_ds = tf.keras.utils.image_dataset_from_directory(data_dir,
   validation_split=0.2,
