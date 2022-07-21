@@ -7,7 +7,7 @@ An object detection algorithm for detection of elements in electrical circuits (
 
 Solarized dark             |  Solarized Ocean
 :-------------------------:|:-------------------------:
-![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter_1.jpg?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter_1_snp.jpg?raw=true)
+![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1.jpg?raw=true)  |  ![alt text](https://github.com/lmschwenger/Object-Detection/blob/main/trainingImages/ammeter/ammeter_1_snp.jpg?raw=true)
 
 
 
