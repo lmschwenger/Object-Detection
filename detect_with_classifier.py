@@ -37,7 +37,7 @@ print("[INFO] loading network...")
 model = tf.keras.models.load_model('D:\savedModels\OD_model_TF')
 
 
-image_path = r'D:\GitHub\Object Detection\images\motor.png'
+image_path = r'D:\GitHub\Object Detection\images\test_circuit5.jpg'
 min_conf = .99
 visualize=0
 

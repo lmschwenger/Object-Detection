@@ -27,7 +27,7 @@ train_ds = tf.keras.utils.image_dataset_from_directory(data_dir,
   image_size=(img_height, img_width),
   batch_size=batch_size)
 
-test_ds = tf.keras.utils.image_dataset_from_directory(
+val_ds = tf.keras.utils.image_dataset_from_directory(
   data_dir,
   validation_split=0.2,
   subset="validation",
@@ -37,6 +37,12 @@ test_ds = tf.keras.utils.image_dataset_from_directory(
 
 print(train_ds.class_names)
 n_classes = len(train_ds.class_names)
+
+train_ds = train_ds.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+val_ds = val_ds.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+
+
+
 
 data_augmentation = tf.keras.Sequential(
   [
@@ -58,10 +64,10 @@ def create_model(img_height, img_width, n_classes):
     model.add(layers.MaxPooling2D(2, 2)),
     model.add(layers.Conv2D(32, 3, padding='same', activation='relu')),
     model.add(layers.MaxPooling2D(2, 2)),
-    model.add(layers.Conv2D(64, 3, padding='same', activation='relu')),
+    model.add(layers.Conv2D(32, 3, padding='same', activation='relu')),
     model.add(layers.MaxPooling2D(2, 2)),
     model.add(layers.Flatten()),
-    model.add(layers.Dense(64, activation='relu')),
+    model.add(layers.Dense(128, activation='relu')),
     #model.add(layers.Dropout(0.2)),
 
     model.add(layers.Dense(n_classes))
@@ -85,7 +91,7 @@ LearningCallback = haltCallback()
 
 EPOCHS = 100
 
-history = model.fit(train_ds, epochs=EPOCHS, validation_data=test_ds)
+history = model.fit(train_ds, epochs=EPOCHS, validation_data=val_ds)
 import plots
 if input("See Results of training? (y/n): ") == "y":
     plots.training_results(history, EPOCHS)
