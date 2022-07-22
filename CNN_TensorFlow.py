@@ -15,9 +15,9 @@ from tensorflow.keras import datasets, layers, models
 from pyimagesearch.detection_helpers import process
 
 #%% Loading images
-batch_size = 350
-img_height = 250
-img_width = 250
+batch_size = 300
+img_height = 180
+img_width = 180
 data_dir = r'D:\GitHub\Object Detection\trainingImages'
 
 train_ds = tf.keras.utils.image_dataset_from_directory(data_dir,
@@ -54,16 +54,15 @@ def create_model(img_height, img_width, n_classes):
     model = models.Sequential()
     model.add(data_augmentation),
     model.add(layers.Rescaling(1./255, input_shape=(img_height, img_width, 3))),
-    model.add(layers.Conv2D(16, 3, padding='same', activation='relu')),
+    model.add(layers.Conv2D(32, 3, padding='same', activation='relu')),
     model.add(layers.MaxPooling2D(2, 2)),
-    model.add(layers.Conv2D(64, 3, padding='same', activation='relu')),
+    model.add(layers.Conv2D(32, 3, padding='same', activation='relu')),
     model.add(layers.MaxPooling2D(2, 2)),
     model.add(layers.Conv2D(64, 3, padding='same', activation='relu')),
     model.add(layers.MaxPooling2D(2, 2)),
     model.add(layers.Flatten()),
-    model.add(layers.Dense(128, activation='relu')),
-    model.add(layers.Dropout(0.2)),
-
+    model.add(layers.Dense(64, activation='relu')),
+    #model.add(layers.Dropout(0.2)),
 
     model.add(layers.Dense(n_classes))
 

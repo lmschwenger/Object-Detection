@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\data_augmentation_functions",
     "\\Plots",
     "\\pyimagesearch"
   ],
-  "SelectedNode": "\\detect_with_classifier.py",
+  "SelectedNode": "\\CNN_TensorFlow.py",
   "PreviewInSolutionExplorer": false
 }

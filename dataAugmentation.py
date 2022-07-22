@@ -12,7 +12,7 @@ directory = f'D:/GitHub/Object Detection/trainingImages/{name}/'
 # Switches for desired operations
 rename = 0 #Rename all files in the directory
 noise_filter = 0 #Add salt n pepper noise to existing images
-brightness_filter = 1 #Alter brightness of existing images
+brightness_filter = 0 #Alter brightness of existing images
 
 i = 1
 if rename:
@@ -56,3 +56,22 @@ if brightness_filter:
         factor = 1.5 #brightens the image
         im_output = enhancer.enhance(factor)
         im_output.save(f.rsplit('.', 1)[0] + str("_bright.") + f.rsplit('.', 1)[1])
+
+
+
+f = r'd:\github\object detection\trainingimages\wire\wire_4_snp_snp.png'
+
+cv2.imwrite(f.rsplit('.', 1)[0] + str("_snp.") + f.rsplit('.', 1)[1], add_noise(cv2.imread(f)))
+
+im = Image.open(f)
+
+#image brightness enhancer
+enhancer = ImageEnhance.Brightness(im)
+
+factor = 0.5 #darkens the image
+im_output = enhancer.enhance(factor)
+im_output.save(f.rsplit('.', 1)[0] + str("_dark.") + f.rsplit('.', 1)[1])
+
+factor = 1.5 #brightens the image
+im_output = enhancer.enhance(factor)
+im_output.save(f.rsplit('.', 1)[0] + str("_bright.") + f.rsplit('.', 1)[1])

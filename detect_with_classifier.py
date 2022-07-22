@@ -30,15 +30,15 @@ WIDTH = 600
 PYR_SCALE = 1.5
 WIN_STEP = 16
 ROI_SIZE = (25, 25)
-INPUT_SIZE = (250, 250)
+INPUT_SIZE = (180, 180)
 
 # load our the network weights from disk
 print("[INFO] loading network...")
 model = tf.keras.models.load_model('D:\savedModels\OD_model_TF')
 
 
-image_path = r'D:\GitHub\Object Detection\images\test_circuit5.jpg'
-min_conf = .20
+image_path = r'D:\GitHub\Object Detection\images\motor.png'
+min_conf = .99
 visualize=0
 
 
@@ -118,7 +118,6 @@ print("[INFO] classifying ROIs...")
 start = time.time()
 preds = model.predict(rois, verbose=1)
 
-print(preds)
 end = time.time()
 print("[INFO] classifying ROIs took {:.5f} seconds".format(
 	end - start))
@@ -149,7 +148,6 @@ for (i, p) in enumerate(preds):
 	p = tf.nn.softmax(p)
 	p_max = np.max(p)
 	label = data_labels[np.argmax(p)]
-	print(label, p)
 	# filter out weak detections by ensuring the predicted probability
 	# is greater than the minimum probability
 	if p_max >= min_conf and label not in filler_features:
@@ -163,7 +161,7 @@ for (i, p) in enumerate(preds):
 		L = labels.get(label, [])
 		L.append((box, p_max))
 		labels[label] = L
-		print(labels)
+
 
 # loop over the labels for each of detected objects in the image
 for label in labels.keys():
