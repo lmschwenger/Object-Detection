@@ -28,17 +28,17 @@ import cv2
 # initialize variables used for the object detection procedure
 WIDTH = 600
 PYR_SCALE = 1.5
-WIN_STEP = 16
-ROI_SIZE = (25, 25)
-INPUT_SIZE = (180, 180)
+WIN_STEP = 10
+ROI_SIZE = (45, 45)
+INPUT_SIZE = (60, 60)
 
 # load our the network weights from disk
 print("[INFO] loading network...")
 model = tf.keras.models.load_model('D:\savedModels\OD_model_TF')
 
 
-image_path = r'D:\GitHub\Object Detection\images\test_circuit5.jpg'
-min_conf = .99
+image_path = r'D:\testImagesContrast\test_circuit_a_v_i.png'
+min_conf = .8
 visualize=0
 
 
@@ -79,17 +79,23 @@ for image in pyramid:
 
 		# take the ROI and pre-process it so we can later classify
 		# the region using Keras/TensorFlow
-		roi = cv2.resize(roiOrig, INPUT_SIZE)
-		roi = img_to_array(roi)
+		#print(roi.shape)
+		#roi = np.array([roi])  # Convert single image to a batch.
+		roi = cv2.resize(roiOrig, INPUT_SIZE, interpolation=cv2.INTER_CUBIC)
+		#print(roi.shape)
+		
+		#roi = cv2.resize(roi, INPUT_SIZE)
+		#roi = img_to_array(roi)
 		#roi = preprocess_input(roi)
-
 		# update our list of ROIs and associated coordinates
 		rois.append(roi)
 		locs.append((x, y, x + w, y + h))
-
+		if i == 2747:
+			cv2.imwrite('D:/testImagesContrast/roi_2.png', roiOrig)
 		# check to see if we are visualizing each of the sliding
 		# windows in the image pyramid
 		if visualize > 0:
+			print(i)
 			# clone the original image and then draw a bounding box
 			# surrounding the current region
 			clone = orig.copy()
@@ -103,7 +109,7 @@ for image in pyramid:
 			#if i > 307:
 			#	cv2.imwrite(r'D:\GitHub\Image Recognition\Test Images\wire\wire_%s.png' % i, roiOrig)
 			
-			#i+=1
+		i+=1
 # show how long it took to loop over the image pyramid layers and
 # sliding window locations
 end = time.time()
@@ -146,8 +152,12 @@ filler_features = ['Other', 'wire', 'paper']
 for (i, p) in enumerate(preds):
 	# grab the prediction information for the current ROI
 	p = tf.nn.softmax(p)
+
 	p_max = np.max(p)
 	label = data_labels[np.argmax(p)]
+	if i == 1128:
+		print(p)
+		print(label)
 	# filter out weak detections by ensuring the predicted probability
 	# is greater than the minimum probability
 	if p_max >= min_conf and label not in filler_features:

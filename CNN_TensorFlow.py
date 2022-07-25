@@ -16,9 +16,10 @@ from pyimagesearch.detection_helpers import process
 
 #%% Loading images
 batch_size = 300
-img_height = 180
-img_width = 180
-data_dir = r'D:\GitHub\Object Detection\trainingImages'
+img_height = 60
+img_width = 60
+#data_dir = r'D:\GitHub\Object Detection\trainingImages'
+data_dir = r'D:\trainingImagesContrast'
 
 train_ds = tf.keras.utils.image_dataset_from_directory(data_dir,
   validation_split=0.2,
@@ -68,7 +69,6 @@ def create_model(img_height, img_width, n_classes):
     model.add(layers.MaxPooling2D(2, 2)),
     model.add(layers.Flatten()),
     model.add(layers.Dense(128, activation='relu')),
-    #model.add(layers.Dropout(0.2)),
 
     model.add(layers.Dense(n_classes))
 
